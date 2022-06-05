@@ -82,9 +82,39 @@ print(pulls_data)
 num_contr_count = pulls_data.groupby(["user","year"])["pid"].count().reset_index()
 num_contr_count = num_contr_count.sort_values(by=["year","pid"],ascending=False)
 
+print(num_contr_count)
+
+
+year = num_contr_count["year"].iloc[0]
+
+print(num_contr_count.iloc[0,0],num_contr_count.iloc[0,1],num_contr_count.iloc[0,2])
 
 for i in range(len(num_contr_count)):
-    print(num_contr_count.iloc[i,0],num_contr_count.iloc[i,1])
+    if num_contr_count["year"].iloc[i]==year:
+           continue
+    else:
+        print(num_contr_count.iloc[i,0],num_contr_count.iloc[i,1],num_contr_count.iloc[i,2]) 
+        year = num_contr_count["year"].iloc[i]
+
+#5. What were the files that were changed in the last 300 pull requests and the
+# number of times each file has been changed. Identify the file that has been changed
+# the most number of times
+
+last_300 = pulls_data.nlargest(300,'date')
+last_300_count = last_300.groupby("file")["pid"].count().reset_index()
+last_300_count = last_300_count.sort_values(by="pid",ascending=False)
+last_300_count_top = last_300_count.iloc[0,:]
+print(last_300_count_top)
+
+#6. Who made the last 10 pull requests of the file we identified in the previous 
+#question (file that was changed the most number of times in the last 300 pull requests)
+
+
+
+
+        
+
+
     
     
 
