@@ -103,11 +103,34 @@ for i in range(len(num_contr_count)):
 last_300 = pulls_data.nlargest(300,'date')
 last_300_count = last_300.groupby("file")["pid"].count().reset_index()
 last_300_count = last_300_count.sort_values(by="pid",ascending=False)
-last_300_count_top = last_300_count.iloc[0,:]
+last_300_count_top = last_300_count.iloc[0]['file']
 print(last_300_count_top)
 
 #6. Who made the last 10 pull requests of the file we identified in the previous 
 #question (file that was changed the most number of times in the last 300 pull requests)
+
+top_file_requests = pulls_data[pulls_data['file']==last_300_count_top]
+top_file_users = list(top_file_requests.nlargest(10,'date')['user'])
+print(top_file_users)
+
+#7. To asess the contribution of each of the users identified in the above question, 
+# plot the number of pull requests by user by year
+
+top_users_extract = pulls_data[pulls_data['user'].isin(top_file_users)]
+top_users_count = top_users_extract.groupby(['user','year'])['pid'].count().reset_index()
+print(top_users_count)
+        
+
+
+
+    
+
+
+
+
+
+
+
 
 
 
