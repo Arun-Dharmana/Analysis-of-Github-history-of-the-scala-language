@@ -117,8 +117,23 @@ print(top_file_users)
 # plot the number of pull requests by user by year
 
 top_users_extract = pulls_data[pulls_data['user'].isin(top_file_users)]
-top_users_count = top_users_extract.groupby(['user','year'])['pid'].count().reset_index()
-print(top_users_count)
+top_users_count = top_users_extract.groupby(['year','user'])['pid'].count().reset_index()
+top_users_count = top_users_count.sort_values(by='year',ascending = True)
+top_users_wide = top_users_count.pivot_table(index='year',columns='user',values='pid',fill_value=0)
+print(top_users_wide)
+top_users_wide.plot(kind='bar')
+        
+
+
+
+    
+
+
+
+
+
+
+
         
 
 
